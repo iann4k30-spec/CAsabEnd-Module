@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>CAsabEnd</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--muted:#8b949e;--blue:#58a6ff;--green:#3fb950;--orange:#d29922;--red:#f85149;--accent:#bc8cff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);padding:16px;padding-bottom:80px}
+.header{text-align:center;padding:24px 0 16px}
+.header h1{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header p{color:var(--muted);font-size:13px;margin-top:4px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.card-title{font-size:14px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.stat{background:#21262d;border-radius:8px;padding:12px;flex:1;min-width:100px;text-align:center}
+.stat .val{font-size:22px;font-weight:700;color:var(--blue);display:block}
+.stat .lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.btn{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;width:100%;margin-bottom:8px;text-align:center;transition:all .15s;color:var(--text)}
+.btn:active{transform:scale(.97)}
+.btn-performance{border-color:var(--red);color:var(--red)}
+.btn-performance.active{background:var(--red);color:#fff}
+.btn-balance{border-color:var(--green);color:var(--green)}
+.btn-balance.active{background:var(--green);color:#fff}
+.btn-powersave{border-color:var(--orange);color:var(--orange)}
+.btn-powersave.active{background:var(--orange);color:#fff}
+.badge{display:inline-block;background:#21262d;color:var(--accent);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:500;margin:2px}
+.info-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+.info-line:last-child{border-bottom:none}
+.info-label{color:var(--muted)}
+.info-value{color:var(--text);font-weight:500}
+.alert{background:#21262d;border-radius:8px;padding:12px;font-size:13px;color:var(--muted);line-height:1.5;margin-top:8px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>CAsabEnd</h1>
+  <p>gebuk limit pake module ini 🔥</p>
+</div>
+
+<div class="card">
+  <div class="card-title">Status</div>
+  <div class="row">
+    <div class="stat"><span class="val" id="profile">-</span><span class="lbl">Profile</span></div>
+    <div class="stat"><span class="val" id="soc">-</span><span class="lbl">SoC</span></div>
+    <div class="stat"><span class="val" id="governor">-</span><span class="lbl">Governor</span></div>
+    <div class="stat"><span class="val" id="freq">-</span><span class="lbl">CPU Freq</span></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Profile</div>
+  <button class="btn btn-performance" id="btn-perf" onclick="setProfile('performance')">🚀 Performance</button>
+  <button class="btn btn-balance active" id="btn-bal" onclick="setProfile('balance')">⚖️ Balance</button>
+  <button class="btn btn-powersave" id="btn-ps" onclick="setProfile('powersave')">🔋 Powersave</button>
+</div>
+
+<div class="card">
+  <div class="card-title">Info</div>
+  <div class="row" style="margin-bottom:8px">
+    <span class="badge">v2024.07.27</span>
+    <span class="badge" id="soc-badge">-</span>
+    <span class="badge">rolling</span>
+  </div>
+  <div class="info-line"><span class="info-label">Module</span><span class="info-value">CAsabEnd</span></div>
+  <div class="info-line"><span class="info-label">Author</span><span class="info-value">CAsabEndTeam</span></div>
+  <div class="info-line"><span class="info-label">Release</span><span class="info-value">Rolling</span></div>
+</div>
+
+<div class="card">
+  <div class="card-title">Update</div>
+  <div class="alert">
+    <span id="update-status">Memeriksa update...</span><br>
+    <span style="font-size:12px">CAsabEnd bakal ngecek update otomatis tiap boot lewat update.json</span>
+  </div>
+</div>
+
+<script>
+const BASE = '/data/adb/.config/CAsabEnd';
+const MODPATH = '/data/adb/modules/CAsabEnd';
+
+async function readFile(path) {
+  try {
+    const r = await fetch('file://' + path);
+    return (await r.text()).trim();
+  } catch { return '-'; }
+}
+
+async function refreshStatus() {
+  const p = await readFile(BASE + '/status/profile');
+  const s = await readFile(BASE + '/soc_recognition');
+  const g = await readFile(BASE + '/status/governor');
+  let f = '-';
+  try {
+    const cpu0 = await readFile('/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq');
+    if (cpu0 !== '-' && !isNaN(parseInt(cpu0))) {
+      f = Math.round(parseInt(cpu0) / 1000) + ' MHz';
+    }
+  } catch {}
+
+  document.getElementById('profile').textContent = p.charAt(0).toUpperCase() + p.slice(1);
+  document.getElementById('soc').textContent = s.charAt(0).toUpperCase() + s.slice(1);
+  document.getElementById('governor').textContent = g;
+  document.getElementById('freq').textContent = f;
+  document.getElementById('soc-badge').textContent = s;
+
+  document.querySelectorAll('.btn-performance,.btn-balance,.btn-powersave').forEach(b => b.classList.remove('active'));
+  if (p === 'performance') document.getElementById('btn-perf').classList.add('active');
+  else if (p === 'balance') document.getElementById('btn-bal').classList.add('active');
+  else if (p === 'powersave') document.getElementById('btn-ps').classList.add('active');
+}
+
+async function setProfile(profile) {
+  try {
+    const p = await readFile(MODPATH + '/scripts/casabend_profiler.sh');
+    if (p === '-') throw new Error('profiler not found');
+    await fetch('file://' + BASE + '/action/' + profile);
+  } catch {}
+  setTimeout(refreshStatus, 1000);
+}
+
+async function checkUpdate() {
+  try {
+    const r = await fetch('https://raw.githubusercontent.com/iann4k30-spec/CAsabEnd-Module/main/update.json');
+    const data = await r.json();
+    const currentVer = 20240727;
+    if (data.versionCode > currentVer) {
+      document.getElementById('update-status').innerHTML = '🚀 <b>Update tersedia: ' + data.version + '</b><br><a href="' + data.zipUrl + '" style="color:var(--blue)">Download</a>';
+    } else {
+      document.getElementById('update-status').textContent = '✅ Module sudah yang terbaru';
+    }
+  } catch {
+    document.getElementById('update-status').textContent = '⚠️ Gagal cek update (butuh internet)';
+  }
+}
+
+refreshStatus();
+setInterval(refreshStatus, 3000);
+checkUpdate();
+</script>
+</body>
+</html>
