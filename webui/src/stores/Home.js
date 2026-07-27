@@ -3,8 +3,8 @@ import { ref } from 'vue'
 import { exec } from 'kernelsu'
 import * as KernelSU from '@/helpers/KernelSU'
 
-const configPath = '/data/adb/.config/encore'
-const modPath = '/data/adb/modules/encore'
+const configPath = '/data/adb/.config/x7k9m2p4'
+const modPath = '/data/adb/modules/x7k9m2p4'
 
 export const useHomeStore = defineStore('home', () => {
   const daemonPidRaw = ref('')
@@ -75,7 +75,7 @@ export const useHomeStore = defineStore('home', () => {
         throw new Error('Not running on KSU WebUI')
       }
 
-      const { errno, stdout } = await exec('/system/bin/toybox pidof encored')
+      const { errno, stdout } = await exec('/system/bin/toybox pidof x7k9m2p4d')
       const pid = stdout.trim()
 
       if (errno === 0 && pid) {

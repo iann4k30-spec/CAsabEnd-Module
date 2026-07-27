@@ -32,7 +32,7 @@ export const useGamesStore = defineStore('games', () => {
     return [...enabled.sort(sortByName), ...disabled.sort(sortByName)]
   })
 
-  const configPath = '/data/adb/.config/encore/gamelist.json'
+  const configPath = '/data/adb/.config/x7k9m2p4/gamelist.json'
 
   async function loadGamelistConfig() {
     try {

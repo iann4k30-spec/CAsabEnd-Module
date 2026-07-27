@@ -26,7 +26,7 @@ export const useEncoreConfigStore = defineStore('encoreConfig', () => {
 
   const isLoaded = computed(() => config.value !== null)
 
-  const configPath = '/data/adb/.config/encore/config.json'
+  const configPath = '/data/adb/.config/x7k9m2p4/config.json'
 
   async function loadConfig() {
     try {
@@ -35,7 +35,7 @@ export const useEncoreConfigStore = defineStore('encoreConfig', () => {
       console.log('Encore config loaded successfully')
       return config.value
     } catch (error) {
-      console.error('Failed to load encore config:', error)
+      console.error('Failed to load x7k9m2p4 config:', error)
       config.value = null
       throw error
     }
@@ -52,7 +52,7 @@ export const useEncoreConfigStore = defineStore('encoreConfig', () => {
       console.log('Encore config saved successfully')
       return true
     } catch (error) {
-      console.error('Failed to save encore config:', error)
+      console.error('Failed to save x7k9m2p4 config:', error)
       throw error
     }
   }
@@ -115,7 +115,7 @@ export const useEncoreConfigStore = defineStore('encoreConfig', () => {
       currentProfile.value === 'balanced' ||
       (currentProfile.value === 'performance' && isLiteModeEnabled.value)
     ) {
-      exec(`/data/adb/modules/encore/system/bin/encore_utility change_cpu_gov ${governor}`).then(({ errno, stderr }) => {
+      exec(`/data/adb/modules/x7k9m2p4/system/bin/x7k9m2p4_utility change_cpu_gov ${governor}`).then(({ errno, stderr }) => {
         if (errno !== 0) {
           console.error('[setBalanceGovernor] Failed to change CPU governor:', stderr)
         }
@@ -128,7 +128,7 @@ export const useEncoreConfigStore = defineStore('encoreConfig', () => {
     config.value.cpu_governor.powersave = governor
 
     if (currentProfile.value === 'powersave') {
-      exec(`/data/adb/modules/encore/system/bin/encore_utility change_cpu_gov ${governor}`).then(({ errno, stderr }) => {
+      exec(`/data/adb/modules/x7k9m2p4/system/bin/x7k9m2p4_utility change_cpu_gov ${governor}`).then(({ errno, stderr }) => {
         if (errno !== 0) {
           console.error('[setPowersaveGovernor] Failed to change CPU governor:', stderr)
         }

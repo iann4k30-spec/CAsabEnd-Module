@@ -77,7 +77,7 @@ void run_perfcommon(void) {
 
     set_profiler_env_vars();
 
-    if (system("encore_profiler perfcommon")) {
+    if (system("x7k9m2p4_profiler perfcommon")) {
         LOGE("Unable to execute profiler changes to perfcommon");
     }
 }
@@ -95,13 +95,13 @@ void apply_performance_profile(bool lite_mode, std::string game_pkg, pid_t game_
 
     if (lite_mode) {
         LOGD("Lite mode is enabled");
-        if (system("encore_profiler performance_lite") != 0) {
+        if (system("x7k9m2p4_profiler performance_lite") != 0) {
             LOGE("Unable to execute profiler changes to performance_lite");
         }
         return;
     }
 
-    if (system("encore_profiler performance") != 0) {
+    if (system("x7k9m2p4_profiler performance") != 0) {
         LOGE("Unable to execute profiler changes to performance");
     }
 }
@@ -117,7 +117,7 @@ void apply_balance_profile() {
 
     set_profiler_env_vars();
 
-    if (system("encore_profiler balance") != 0) {
+    if (system("x7k9m2p4_profiler balance") != 0) {
         LOGE("Unable to execute profiler changes to balance");
     }
 }
@@ -133,7 +133,7 @@ void apply_powersave_profile() {
 
     set_profiler_env_vars();
 
-    if (system("encore_profiler powersave") != 0) {
+    if (system("x7k9m2p4_profiler powersave") != 0) {
         LOGE("Unable to execute profiler changes to powersave");
     }
 }

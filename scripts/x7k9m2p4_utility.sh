@@ -18,7 +18,7 @@
 # shellcheck disable=SC2317,SC3006,SC3018,SC3034,SC3057,SC3037
 
 # Config dir
-MODULE_CONFIG="/data/adb/.config/encore"
+MODULE_CONFIG="/data/adb/.config/x7k9m2p4"
 
 change_cpu_gov() {
 	chmod 644 /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
@@ -30,10 +30,10 @@ change_cpu_gov() {
 }
 
 save_logs() {
-	report_dir="$MODULE_CONFIG/encore_bugreport_temp"
+	report_dir="$MODULE_CONFIG/x7k9m2p4_bugreport_temp"
 	mkdir -p "$report_dir/pstore"
 
-	log_file="encore_bugreport_$(date +"%Y-%m-%d_%H_%M").tar.gz"
+	log_file="x7k9m2p4_bugreport_$(date +"%Y-%m-%d_%H_%M").tar.gz"
 	SOC="Unknown"
 
 	case $(<$MODULE_CONFIG/soc_recognition) in
@@ -50,15 +50,15 @@ save_logs() {
 	{
 		echo "*****************************************************"
 		echo "Encore Tweaks Log"
-		echo "Module Version: $(awk -F'=' '/version=/ {print $2}' /data/adb/modules/encore/module.prop)"
+		echo "Module Version: $(awk -F'=' '/version=/ {print $2}' /data/adb/modules/x7k9m2p4/module.prop)"
 		echo "Chipset: $SOC $(getprop ro.board.platform)"
 		echo "Fingerprint: $(getprop ro.build.fingerprint)"
 		echo "Android SDK: $(getprop ro.build.version.sdk)"
 		echo "Kernel: $(uname -r -m)"
 		echo "*****************************************************"
 		echo ""
-		[ -f "$MODULE_CONFIG/encore.log" ] && cat "$MODULE_CONFIG/encore.log"
-	} >"$report_dir/encore.log"
+		[ -f "$MODULE_CONFIG/x7k9m2p4.log" ] && cat "$MODULE_CONFIG/x7k9m2p4.log"
+	} >"$report_dir/x7k9m2p4.log"
 
 	[ -f "$MODULE_CONFIG/sysmon.log" ] && cp "$MODULE_CONFIG/sysmon.log" "$report_dir/"
 	cp -r /sys/fs/pstore/. "$report_dir/pstore/" 2>/dev/null
@@ -110,7 +110,7 @@ logcat() {
 
 	# Info block
 	echo -e "
-\e[1;32mModule Version:\e[0m $(awk -F'=' '/version=/ {print $2}' /data/adb/modules/encore/module.prop)
+\e[1;32mModule Version:\e[0m $(awk -F'=' '/version=/ {print $2}' /data/adb/modules/x7k9m2p4/module.prop)
 \e[1;32mChipset:\e[0m        $SOC $(getprop ro.board.platform)
 \e[1;32mFingerprint:\e[0m    $(getprop ro.build.fingerprint)
 \e[1;32mAndroid SDK:\e[0m    $(getprop ro.build.version.sdk)
@@ -120,7 +120,7 @@ logcat() {
 "
 
 	# Tail log
-	tail -f $MODULE_CONFIG/encore.log | while read -r line; do
+	tail -f $MODULE_CONFIG/x7k9m2p4.log | while read -r line; do
 		timestamp="${line:0:23}"
 		level_char=$(echo "$line" | awk '{print $3}')
 		msg="${line:24}"

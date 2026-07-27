@@ -22,7 +22,7 @@
 ###################################
 
 # Config dir
-MODULE_CONFIG="/data/adb/.config/encore"
+MODULE_CONFIG="/data/adb/.config/x7k9m2p4"
 
 # SoC recognition
 SOC=$(<$MODULE_CONFIG/soc_recognition)

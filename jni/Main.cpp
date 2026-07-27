@@ -188,7 +188,7 @@ static void evaluate_and_apply_profile(DaemonState &state) {
 // Main daemon loop
 // ---------------------------------------------------------------------------
 
-static void encore_main_daemon() {
+static void x7k9m2p4_main_daemon() {
     run_perfcommon();
 
     auto& binder = BinderMonitor::get();
@@ -325,7 +325,7 @@ int cmd_run_daemon() {
         return EXIT_FAILURE;
     }
 
-    encore_main_daemon();
+    x7k9m2p4_main_daemon();
 
     LOGW("Encore Tweaks daemon exited");
     SignalHandler::cleanup_before_exit();

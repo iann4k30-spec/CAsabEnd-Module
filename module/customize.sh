@@ -18,7 +18,7 @@
 SKIPUNZIP=1
 SOC=0
 
-MODULE_CONFIG="/data/adb/.config/encore"
+MODULE_CONFIG="/data/adb/.config/x7k9m2p4"
 
 make_node() {
 	[ ! -f "$2" ] && echo "$1" >"$2"
@@ -128,7 +128,7 @@ recognize_soc() {
 
 generate_gamelist() {
   extract "$ZIPFILE" 'gamelist.txt' "$MODULE_CONFIG"
-  "$MODPATH/system/bin/encored" setup_gamelist "$MODULE_CONFIG/gamelist.txt"
+  "$MODPATH/system/bin/x7k9m2p4d" setup_gamelist "$MODULE_CONFIG/gamelist.txt"
   exit_code=$?
 
   rm -f "$MODULE_CONFIG/gamelist.txt"
@@ -153,8 +153,8 @@ extract "$ZIPFILE" 'uninstall.sh' "$MODPATH"
 extract "$ZIPFILE" 'action.sh' "$MODPATH"
 extract "$ZIPFILE" 'cleanup.sh' "$MODPATH"
 extract "$ZIPFILE" 'binder_resolver.apk' "$MODPATH"
-extract "$ZIPFILE" 'system/bin/encore_profiler' "$MODPATH"
-extract "$ZIPFILE" 'system/bin/encore_utility' "$MODPATH"
+extract "$ZIPFILE" 'system/bin/x7k9m2p4_profiler' "$MODPATH"
+extract "$ZIPFILE" 'system/bin/x7k9m2p4_utility' "$MODPATH"
 cp "$MODPATH/module.prop" "$MODPATH/module.prop.orig"
 
 # Target architecture
@@ -165,7 +165,7 @@ case $ARCH in
 esac
 
 # Extract executables
-extract "$ZIPFILE" "libs/$ARCH_TMP/encored" "$TMPDIR"
+extract "$ZIPFILE" "libs/$ARCH_TMP/x7k9m2p4d" "$TMPDIR"
 cp "$TMPDIR"/libs/"$ARCH_TMP"/* "$MODPATH/system/bin"
 rm -rf "$TMPDIR/libs"
 
@@ -179,13 +179,13 @@ if [ "$KSU" = "true" ] || [ "$APATCH" = "true" ]; then
 
 	# symlink ourselves on $PATH
 	manager_paths="/data/adb/ap/bin /data/adb/ksu/bin"
-	BIN_PATH="/data/adb/modules/encore/system/bin"
+	BIN_PATH="/data/adb/modules/x7k9m2p4/system/bin"
 	for dir in $manager_paths; do
 		[ -d "$dir" ] && {
 			ui_print "- Creating symlink in $dir"
-			ln -sf "$BIN_PATH/encored" "$dir/encored"
-			ln -sf "$BIN_PATH/encore_profiler" "$dir/encore_profiler"
-			ln -sf "$BIN_PATH/encore_utility" "$dir/encore_utility"
+			ln -sf "$BIN_PATH/x7k9m2p4d" "$dir/x7k9m2p4d"
+			ln -sf "$BIN_PATH/x7k9m2p4_profiler" "$dir/x7k9m2p4_profiler"
+			ln -sf "$BIN_PATH/x7k9m2p4_utility" "$dir/x7k9m2p4_utility"
 		}
 	done
 fi
@@ -195,8 +195,8 @@ ui_print "- Extracting webroot"
 unzip -o "$ZIPFILE" "webroot/*" -d "$MODPATH" -x "*.sha256" >&2
 
 # Mitigate root detection
-[ -d /data/encore ] && rm -rf /data/encore
-[ -f /data/local/tmp/encore_logo.png ] && rm -f /data/local/tmp/encore_logo.png
+[ -d /data/x7k9m2p4 ] && rm -rf /data/x7k9m2p4
+[ -f /data/local/tmp/x7k9m2p4_logo.png ] && rm -f /data/local/tmp/x7k9m2p4_logo.png
 
 # Set configs
 ui_print "- Encore Tweaks configuration setup"
@@ -214,7 +214,7 @@ if [ ! -f "$MODULE_CONFIG/gamelist.json" ]; then
   ui_print "- Initializing Gamelist JSON..."
   generate_gamelist
 else
-  "$MODPATH/system/bin/encored" check_gamelist
+  "$MODPATH/system/bin/x7k9m2p4d" check_gamelist
   [ $? -gt 0 ] && {
     ui_print "! Gamelist JSON is malformed, regenerating..."
     generate_gamelist

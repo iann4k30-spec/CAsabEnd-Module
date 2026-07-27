@@ -1,6 +1,6 @@
 {
   "title": "x7k9m2p4",
-  "icon": "icon.webp",
+  "icon": "icon.png",
   "exitConfirm": false,
   "contentSecurityPolicy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' ksu:; font-src 'self' data:; connect-src 'self'"
 }

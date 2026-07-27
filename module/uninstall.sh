@@ -14,10 +14,10 @@
 # limitations under the License.
 #
 
-rm -rf /data/adb/.config/encore
-rm -f /data/adb/service.d/.encore_cleanup.sh
+rm -rf /data/adb/.config/x7k9m2p4
+rm -f /data/adb/service.d/.x7k9m2p4_cleanup.sh
 
-need_gone="encored encore_profiler encore_utility encore_log"
+need_gone="x7k9m2p4d x7k9m2p4_profiler x7k9m2p4_utility x7k9m2p4_log"
 manager_paths="/data/adb/ap/bin /data/adb/ksu/bin"
 
 for dir in $manager_paths; do

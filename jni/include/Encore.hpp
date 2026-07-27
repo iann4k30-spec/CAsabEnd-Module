@@ -18,15 +18,15 @@
 
 #include <string>
 
-#define NOTIFY_TITLE "Encore Tweaks"
-#define LOG_TAG "EncoreTweaks"
+#define NOTIFY_TITLE "x7k9m2p4"
+#define LOG_TAG "x7k9m2p4"
 
-#define CONFIG_DIR "/data/adb/.config/encore"
-#define MODPATH "/data/adb/modules/encore"
+#define CONFIG_DIR "/data/adb/.config/x7k9m2p4"
+#define MODPATH "/data/adb/modules/x7k9m2p4"
 
 #define LOCK_FILE CONFIG_DIR "/.lock"
 #define JAVA_LOCK_FILE CONFIG_DIR "/java.lock"
-#define LOG_FILE CONFIG_DIR "/encore.log"
+#define LOG_FILE CONFIG_DIR "/x7k9m2p4.log"
 #define PROFILE_MODE CONFIG_DIR "/current_profile"
 #define GAME_INFO CONFIG_DIR "/gameinfo"
 #define CONFIG_FILE CONFIG_DIR "/config.json"

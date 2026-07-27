@@ -17,8 +17,8 @@
 
 # shellcheck disable=SC2016
 
-MODULE_DIR="/data/adb/modules/encore"
-THIS_SCRIPT="/data/adb/service.d/.encore_cleanup.sh"
+MODULE_DIR="/data/adb/modules/x7k9m2p4"
+THIS_SCRIPT="/data/adb/service.d/.x7k9m2p4_cleanup.sh"
 
 if [ ! -d "$MODULE_DIR/disable" ]; then
   cat "$MODULE_DIR/module.prop.orig" >"$MODULE_DIR/module.prop"
