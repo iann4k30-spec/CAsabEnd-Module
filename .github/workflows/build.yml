@@ -1,4 +1,4 @@
-name: Build Encore Tweaks
+name: Build CAsabEnd
 
 on:
   pull_request:
@@ -69,7 +69,7 @@ jobs:
           COMMIT_URL: ${{ github.event.head_commit.url }}
           BRANCH: ${{ github.ref_name }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          TITLE: Encore Tweaks
+          TITLE: CAsabEnd
         run: |
           export VERSION=$(git rev-list --count HEAD)
           bash .github/scripts/telegram_bot.sh ${{ steps.compileZip.outputs.zipName }}

@@ -31,13 +31,13 @@ find ./prebuilt -mindepth 1 -maxdepth 1 ! -name "README.md" -exec cp -r {} ./mod
 find ./config -mindepth 1 -maxdepth 1 ! -name "README.md" -exec cp -r {} ./module/config \;
 
 # Download banner image
-wget -O module/banner.webp https://encore.rem01gaming.dev/ogp/default.webp
+cp module/logo.png module/banner.png 2>/dev/null || true
 
 # Remove .sh extension from scripts
 find module/system/bin -maxdepth 1 -type f -name "*.sh" -exec sh -c 'mv -- "$0" "${0%.sh}"' {} \;
 
 # Parse version info to module prop
-zipName="encore-$version-$release_code.zip"
+zipName="CAsabEnd-$version-$release_code.zip"
 echo "zipName=$zipName" >>"$GITHUB_OUTPUT"
 
 # Generate sha256sum for integrity checkup

@@ -1,9 +1,9 @@
-id=encore
-name=Encore Tweaks
+id=CAsabEnd
+name=CAsabEnd
 version=
 versionCode=
-author=Rem01Gaming
-description=Special performance module for your Device.
-updateJson=https://encore.rem01gaming.dev/api/update.json
-banner=banner.webp
+author=CAsabEndTeam
+description=Dynamic performance module — maximize gaming, preserve battery
+updateJson=https://raw.githubusercontent.com/iann4k30-spec/CAsabEnd-Module/main/update.json
+banner=logo.png
 webuiIcon=webroot/icon.webp

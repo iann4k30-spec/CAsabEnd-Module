@@ -1,48 +1,104 @@
-<p align="center"><a href="https://encore.rem01gaming.dev" target="_blank"><img src="https://encore.rem01gaming.dev/logo.webp" width="200" alt="Encore Tweaks Logo"></a></p>
-
 <p align="center">
-<a href="https://t.me/rem01schannel"><img src="https://img.shields.io/badge/Follow-Telegram-white.svg?style=for-the-badge&logo=telegram&logoColor=white&labelColor=222" alt="Join Our Telegram Channel"></a>
-<a href="https://encore.rem01gaming.dev/download"><img src="https://img.shields.io/github/downloads/rem01gaming/encore/total?style=for-the-badge&logoColor=white&labelColor=222" alt="Total Downloads"></a>
-<a href="https://github.com/Rem01Gaming/encore/releases"><img src="https://img.shields.io/github/v/release/rem01gaming/encore?label=Release&style=for-the-badge&logo=github&logoColor=white&labelColor=222" alt="Latest Stable Version"></a>
-<a href="https://encore.rem01gaming.dev"><img src="https://img.shields.io/badge/Apache-white?style=for-the-badge&logo=andela&logoColor=white&label=License&labelColor=222" alt="License"></a>
+  <img src="logo.png" width="160" alt="CAsabEnd Logo" style="border:3px solid #000;box-shadow:6px 6px 0 #000">
 </p>
 
-## About Encore Tweaks
+<p align="center">
+  <img src="https://img.shields.io/badge/Version-rolling-bc8cff?style=for-the-badge&logo=github"/>
+  <img src="https://img.shields.io/badge/Magisk-✓-00b894?style=for-the-badge&logo=magisk"/>
+  <img src="https://img.shields.io/badge/KernelSU-✓-6c5ce7?style=for-the-badge&logo=linux"/>
+  <img src="https://img.shields.io/badge/APatch-✓-e17055?style=for-the-badge&logo=android"/>
+  <img src="https://img.shields.io/github/downloads/iann4k30-spec/CAsabEnd-Module/total?style=for-the-badge&logo=download&color=0984e3"/>
+</p>
 
-**Encore Tweaks** is a dynamic Magisk module designed to maximize your device's gaming performance while intelligently preserving battery life during everyday use. Perfect for gamers who demand smooth gameplay without compromising daily usability!
+---
 
-More info about this project on [Official Encore Tweaks website](https://encore.rem01gaming.dev/)
+## About
 
-## Supported Root Managers
+CAsabEnd is a dynamic performance module for Android. It maximizes device performance during gaming and preserves battery during daily use.
 
-- [APatch](https://github.com/bmax121/APatch)
-- [KernelSU](https://github.com/tiann/KernelSU)
-- [Magisk](https://github.com/topjohnwu/Magisk)  <sup>([no WebUI](https://github.com/topjohnwu/Magisk/issues/8609#event-15568590949)👀)</sup>
+Built on the proven Encore codebase with additional refinements and rolling release system.
 
-### Also Supported on
+---
 
-- [KsuWebUI](https://github.com/5ec1cff/KsuWebUIStandalone)   <sup>🌐</sup>
-- [WebUI-X](https://github.com/MMRLApp/WebUI-X-Portable)   <sup>🌐</sup>
-- [MMRL](https://github.com/MMRLApp/MMRL)
+## Features
 
-## Resources
+- **CPU** — frequency scaling, governor switching, stune/top-app boost
+- **GPU** — KGSL (Snapdragon), GED (MediaTek), Mali (Exynos) optimization
+- **I/O** — scheduler tuning, read-ahead, queue depth
+- **Memory** — VM dirty ratio, swappiness, vfs cache, compaction
+- **Network** — TCP buffer, congestion control (BBR), fastopen
+- **Thermal** — policy control, threshold adjustment
+- **Scheduler** — WALT tuning, sched boost, cpuset management
+- **WebUI** — profile switching, configuration, status monitoring
 
-- [FAQ](https://encore.rem01gaming.dev/guide/faq.html) - Common questions answered
-- [Configuration Guide](https://encore.rem01gaming.dev/guide/webui-and-configuration.html) - How to configure the WebUI
-- [Download](https://encore.rem01gaming.dev/download) - Get the latest version
+---
 
-## Community & Support
+## Platform Support
 
-- [Telegram Channel](https://t.me/rem01schannel) - Stay updated with announcements
-- [Report Issues](https://github.com/rem01gaming/encore/issues) - Found a bug? Let us know!
-- [Contribute](https://github.com/rem01gaming/encore/pulls) - Submit improvements via PR
+| Platform | Tuning |
+|----------|--------|
+| Snapdragon (KGSL + Adreno) | GPU pwrlevel, bus dcvs, adreno idler |
+| MediaTek (PPM + GED) | PPM policy, GED boost, gx game mode |
+| Exynos (Mali) | DVFS lock, power policy |
 
-## Translation
+---
 
-Interested in translating Encore Tweaks? We use Weblate to crowdsource translations, allowing the community to collaborate on making the project accessible in multiple languages. Visit our translation project [here](https://hosted.weblate.org/projects/encore-tweaks/) and help us reach more users worldwide!
+## Profiles
 
-<a href="https://hosted.weblate.org/projects/encore-tweaks/"><img src="https://hosted.weblate.org/widget/encore-tweaks/webui/horizontal-auto.svg" alt="Weblate translation status"></a>
+| Mode | Behavior |
+|------|----------|
+| **Performance** | Max CPU/GPU freq, thermal off, sched boost 100, I/O gaming |
+| **Balance** | Default freq, normal governor, daily use |
+| **Powersave** | Min freq, GPU low power, core offline |
 
-## License
+---
 
-Encore Tweaks is open-sourced software licensed under the [Apache-2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
+## Requirements
+
+- Android 10+ (API 29)
+- Magisk v20.4+ / KernelSU / APatch
+- ARM64 / ARM
+
+---
+
+## Install
+
+```
+1. Download CAsabEnd build artifact
+2. Flash via Magisk / KernelSU / APatch
+3. Reboot
+```
+
+WebUI accessible from KSU module card, KsuWebUI Standalone, or MMRL.
+
+---
+
+## Build from Source
+
+```bash
+git clone https://github.com/iann4k30-spec/CAsabEnd-Module
+cd CAsabEnd-Module
+
+# Build daemon (NDK required)
+ndk-build -j$(nproc)
+
+# Build WebUI (Bun required)
+cd webui
+bun install
+bun run build
+cp -r dist/* ../module/webroot
+
+# Package
+cd ..
+bash .github/scripts/compile_zip.sh
+```
+
+GitHub Actions also produces build artifacts automatically on push.
+
+---
+
+<p align="center">
+  <a href="https://github.com/iann4k30-spec/CAsabEnd-Module/releases">
+    <img src="https://img.shields.io/github/v/release/iann4k30-spec/CAsabEnd-Module?style=for-the-badge&logo=github&color=bc8cff"/>
+  </a>
+</p>
