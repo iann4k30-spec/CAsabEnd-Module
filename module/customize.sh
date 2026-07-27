@@ -15,7 +15,7 @@ if [ "$KSU" = "true" ]; then
   echo ""
   echo "  ╔══════════════════════════════════════════════════╗"
   echo "  ║      CAsabEnd — gebuk limit pake module ini      ║"
-  echo "  ║             Performance Module v2024.07.27        ║"
+  echo "  ║             Performance Module v2026.07.27        ║"
   echo "  ╚══════════════════════════════════════════════════╝"
   echo ""
 fi
@@ -31,7 +31,7 @@ if [ "$APATCH" = "true" ]; then
   echo ""
   echo "  ╔══════════════════════════════════════════════════╗"
   echo "  ║      CAsabEnd — gebuk limit pake module ini      ║"
-  echo "  ║             Performance Module v2024.07.27        ║"
+  echo "  ║             Performance Module v2026.07.27        ║"
   echo "  ╚══════════════════════════════════════════════════╝"
   echo ""
 fi
@@ -58,7 +58,7 @@ install_module() {
   ui_print ""
   ui_print "  ╔══════════════════════════════════════════════════╗"
   ui_print "  ║      CAsabEnd — gebuk limit pake module ini      ║"
-  ui_print "  ║          🔥 Rolling Release — siap update        ║"
+  ui_print "  ║              🔥 v2026 — Year of CAsabEnd          ║"
   ui_print "  ╚══════════════════════════════════════════════════╝"
   ui_print ""
 

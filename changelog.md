@@ -1,7 +1,11 @@
 # CAsabEnd Changelog
 
-## v2024.07.27
-- Initial rolling release
-- CPU/GPU/DDR tuning
-- Snapdragon + MediaTek + Exynos support
-- 3 profile: Performance | Balance | Powersave
+## v2026.07.27
+- WebUI ala Encore: Home / Settings / Games
+- Profile switch dari WebUI  
+- CPU Governor config (balance & powersave)
+- Lite mode, disable tweaks, device mitigation
+- Log level slider
+- Update checker dari GitHub
+- Logo module di WebUI
+- Year 2026 edition

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="CAsabEnd"
-VER=$(cat version 2>/dev/null || echo "v2024.07.27")
+VER=$(cat version 2>/dev/null || echo "v2026.07.27")
 OUTPUT="../${NAME}-${VER}.zip"
 
 cd module

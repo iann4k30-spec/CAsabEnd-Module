@@ -5,140 +5,555 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>CAsabEnd</title>
 <style>
-:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--muted:#8b949e;--blue:#58a6ff;--green:#3fb950;--orange:#d29922;--red:#f85149;--accent:#bc8cff}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);padding:16px;padding-bottom:80px}
-.header{text-align:center;padding:24px 0 16px}
-.header h1{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.header p{color:var(--muted);font-size:13px;margin-top:4px}
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--muted:#8b949e;--blue:#58a6ff;--green:#3fb950;--orange:#d29922;--red:#f85149;--accent:#bc8cff;--surface:#21262d}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;overflow:hidden}
+.app{display:flex;flex-direction:column;height:100dvh}
+header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card);border-bottom:1px solid var(--border);flex-shrink:0}
+header .logo{width:36px;height:36px;border-radius:8px;object-fit:cover}
+header h1{font-size:18px;font-weight:700;flex:1}
+header .back-btn{background:none;border:none;color:var(--text);font-size:24px;cursor:pointer;padding:4px 8px;display:none}
+.content{flex:1;overflow-y:auto;padding:16px;padding-bottom:80px}
+.page{display:none}.page.active{display:block}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
-.card-title{font-size:14px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.card-title{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
 .row{display:flex;gap:12px;flex-wrap:wrap}
-.stat{background:#21262d;border-radius:8px;padding:12px;flex:1;min-width:100px;text-align:center}
-.stat .val{font-size:22px;font-weight:700;color:var(--blue);display:block}
+.stat{background:var(--surface);border-radius:10px;padding:14px;flex:1;min-width:90px;text-align:center}
+.stat .val{font-size:20px;font-weight:700;color:var(--blue);display:block}
 .stat .lbl{font-size:11px;color:var(--muted);margin-top:4px}
-.btn{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;width:100%;margin-bottom:8px;text-align:center;transition:all .15s;color:var(--text)}
+.btn{display:block;width:100%;padding:14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:15px;font-weight:600;cursor:pointer;text-align:center;margin-bottom:8px;transition:all .15s}
 .btn:active{transform:scale(.97)}
-.btn-performance{border-color:var(--red);color:var(--red)}
-.btn-performance.active{background:var(--red);color:#fff}
-.btn-balance{border-color:var(--green);color:var(--green)}
-.btn-balance.active{background:var(--green);color:#fff}
-.btn-powersave{border-color:var(--orange);color:var(--orange)}
-.btn-powersave.active{background:var(--orange);color:#fff}
-.badge{display:inline-block;background:#21262d;color:var(--accent);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:500;margin:2px}
-.info-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+.btn-perf{border-color:var(--red);color:var(--red)}
+.btn-perf.active{background:var(--red);color:#fff}
+.btn-bal{border-color:var(--green);color:var(--green)}
+.btn-bal.active{background:var(--green);color:#fff}
+.btn-ps{border-color:var(--orange);color:var(--orange)}
+.btn-ps.active{background:var(--orange);color:#fff}
+.btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.badge{display:inline-block;background:var(--surface);color:var(--accent);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:500;margin:2px}
+.menu-item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.menu-item:last-child{border-bottom:none}
+.menu-item .left{display:flex;align-items:center;gap:12px}
+.menu-item .left .icon{font-size:20px;width:24px;text-align:center}
+.menu-item .label{font-size:14px;font-weight:500}
+.menu-item .desc{font-size:12px;color:var(--muted);margin-top:2px}
+.menu-item .right{color:var(--muted);font-size:16px}
+.info-line{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
 .info-line:last-child{border-bottom:none}
-.info-label{color:var(--muted)}
-.info-value{color:var(--text);font-weight:500}
-.alert{background:#21262d;border-radius:8px;padding:12px;font-size:13px;color:var(--muted);line-height:1.5;margin-top:8px}
+.info-label{color:var(--muted)}.info-value{font-weight:500}
+.toggle{position:relative;width:44px;height:24px;background:var(--border);border-radius:12px;cursor:pointer;transition:.2s;flex-shrink:0}
+.toggle.on{background:var(--blue)}
+.toggle .knob{position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}
+.toggle.on .knob{left:22px}
+.alert{background:var(--surface);border-radius:10px;padding:14px;font-size:13px;color:var(--muted);line-height:1.6;margin-top:8px}
+.logo-banner{display:flex;flex-direction:column;align-items:center;padding:20px 0 8px}
+.logo-banner img{width:72px;height:72px;border-radius:16px;margin-bottom:8px}
+.logo-banner h2{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo-banner p{font-size:13px;color:var(--muted);margin-top:4px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;z-index:10;flex-shrink:0}
+.nav-btn{flex:1;text-align:center;padding:10px 0 8px;font-size:11px;color:var(--muted);cursor:pointer;transition:.15s;border:none;background:none}
+.nav-btn.active{color:var(--blue)}
+.nav-btn .nav-icon{font-size:22px;display:block;margin-bottom:2px}
+.nav-btn .nav-lbl{font-weight:500}
+.select{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:8px;font-size:14px;width:100%;margin-bottom:8px;outline:none}
+.select:focus{border-color:var(--blue)}
+.slider-group{margin:12px 0}
+.slider-group label{font-size:13px;color:var(--muted);display:block;margin-bottom:4px}
+.slider{width:100%;-webkit-appearance:none;background:var(--border);height:4px;border-radius:2px;outline:none}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--blue);cursor:pointer}
+.hidden{display:none!important}
+.search-box{width:100%;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;outline:none;margin-bottom:12px}
+.search-box:focus{border-color:var(--blue)}
+.search-box::placeholder{color:var(--muted)}
+.app-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.app-item:last-child{border-bottom:none}
+.app-item .app-icon{width:36px;height:36px;border-radius:8px;background:var(--surface)}
+.app-item .app-name{font-size:14px;font-weight:500;flex:1}
+.app-item .app-pkg{font-size:11px;color:var(--muted)}
+.delete-btn{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:4px}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>CAsabEnd</h1>
-  <p>gebuk limit pake module ini 🔥</p>
-</div>
+<div class="app" id="app">
 
-<div class="card">
-  <div class="card-title">Status</div>
-  <div class="row">
-    <div class="stat"><span class="val" id="profile">-</span><span class="lbl">Profile</span></div>
-    <div class="stat"><span class="val" id="soc">-</span><span class="lbl">SoC</span></div>
-    <div class="stat"><span class="val" id="governor">-</span><span class="lbl">Governor</span></div>
-    <div class="stat"><span class="val" id="freq">-</span><span class="lbl">CPU Freq</span></div>
+  <!-- Header -->
+  <header>
+    <button class="back-btn" id="backBtn" onclick="goBack()">&#x2039;</button>
+    <img class="logo" src="file:///data/adb/modules/CAsabEnd/logo.png" alt="CAsabEnd" onerror="this.style.display='none'">
+    <h1 id="pageTitle">CAsabEnd</h1>
+  </header>
+
+  <!-- Pages -->
+  <div class="content" id="content">
+
+    <!-- HOME -->
+    <div class="page active" id="page-home">
+      <div class="logo-banner">
+        <img src="file:///data/adb/modules/CAsabEnd/logo.png" alt="CAsabEnd" onerror="this.style.display='none'">
+        <h2>CAsabEnd</h2>
+        <p>gebuk limit pake module ini &#x1f525;</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Status</div>
+        <div class="row">
+          <div class="stat"><span class="val" id="statProfile">-</span><span class="lbl">Profile</span></div>
+          <div class="stat"><span class="val" id="statSoC">-</span><span class="lbl">SoC</span></div>
+          <div class="stat"><span class="val" id="statGov">-</span><span class="lbl">Governor</span></div>
+          <div class="stat"><span class="val" id="statFreq">-</span><span class="lbl">CPU MHz</span></div>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <div class="stat"><span class="val" id="statDaemon">-</span><span class="lbl">Daemon</span></div>
+          <div class="stat"><span class="val" id="statVer">-</span><span class="lbl">Version</span></div>
+          <div class="stat"><span class="val" id="statKernel">-</span><span class="lbl">Kernel</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Profile</div>
+        <button class="btn btn-perf" id="btnPerf" onclick="switchProfile('performance')">&#x1f680; Performance</button>
+        <button class="btn btn-bal active" id="btnBal" onclick="switchProfile('balance')">&#x2696;&#xfe0f; Balance</button>
+        <button class="btn btn-ps" id="btnPs" onclick="switchProfile('powersave')">&#x1f50b; Powersave</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Info</div>
+        <div style="margin-bottom:8px">
+          <span class="badge" id="badgeVer">v2026.07.27</span>
+          <span class="badge" id="badgeSoC">-</span>
+          <span class="badge">rolling</span>
+        </div>
+        <div class="info-line"><span class="info-label">Module</span><span class="info-value">CAsabEnd</span></div>
+        <div class="info-line"><span class="info-label">Author</span><span class="info-value">CAsabEndTeam</span></div>
+        <div class="info-line"><span class="info-label">Android</span><span class="info-value" id="infoAndroid">-</span></div>
+        <div class="info-line"><span class="info-label">Daemon PID</span><span class="info-value" id="infoPid">-</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Update</div>
+        <div class="alert" id="updateStatus">Memeriksa update...</div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+      <div class="card">
+        <div class="card-title">Configuration</div>
+        <div class="menu-item" onclick="navigateTo('lite_mode')">
+          <div class="left"><span class="icon">&#x2699;&#xfe0f;</span><div><div class="label">Lite Mode</div><div class="desc">Pake governor balance pas performance</div></div></div>
+          <div class="toggle" id="toggleLite" onclick="event.stopPropagation();toggleLiteMode()"><div class="knob"></div></div>
+        </div>
+        <div class="menu-item" onclick="navigateTo('cpu_governor')">
+          <div class="left"><span class="icon">&#x1f5a5;&#xfe0f;</span><div><div class="label">CPU Governor</div><div class="desc">Set balance &amp; powersave governor</div></div></div>
+          <span class="right">&#x203a;</span>
+        </div>
+        <div class="menu-item" onclick="navigateTo('log_level')">
+          <div class="left"><span class="icon">&#x1f4dd;</span><div><div class="label">Log Level</div><div class="desc">Atur verbosity logging</div></div></div>
+          <span class="right">&#x203a;</span>
+        </div>
+        <div class="menu-item" onclick="navigateTo('disable_tweaks')">
+          <div class="left"><span class="icon">&#x26d4;</span><div><div class="label">Disable All Tweaks</div><div class="desc">Matikan semua tuning</div></div></div>
+          <div class="toggle" id="toggleDisable" onclick="event.stopPropagation();toggleDisableTweaks()"><div class="knob"></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Device</div>
+        <div class="menu-item" onclick="navigateTo('device_mitigation')">
+          <div class="left"><span class="icon">&#x1f527;</span><div><div class="label">Device Mitigation</div><div class="desc">Skip tweak tertentu berdasarkan device</div></div></div>
+          <div class="toggle" id="toggleMitigation" onclick="event.stopPropagation();toggleMitigation()"><div class="knob"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAMES -->
+    <div class="page" id="page-games">
+      <input class="search-box" id="gameSearch" placeholder="Cari game..." oninput="filterGames()">
+      <div class="card" id="gameList"><div class="alert">Loading apps...</div></div>
+    </div>
+
+    <!-- SUBPAGE -->
+    <div class="page" id="page-sub">
+      <div id="subContent"></div>
+    </div>
+
   </div>
-</div>
 
-<div class="card">
-  <div class="card-title">Profile</div>
-  <button class="btn btn-performance" id="btn-perf" onclick="setProfile('performance')">🚀 Performance</button>
-  <button class="btn btn-balance active" id="btn-bal" onclick="setProfile('balance')">⚖️ Balance</button>
-  <button class="btn btn-powersave" id="btn-ps" onclick="setProfile('powersave')">🔋 Powersave</button>
-</div>
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <button class="nav-btn active" data-page="home" onclick="showPage('home')">
+      <span class="nav-icon">&#x1f3e0;</span>
+      <span class="nav-lbl">Home</span>
+    </button>
+    <button class="nav-btn" data-page="settings" onclick="showPage('settings')">
+      <span class="nav-icon">&#x2699;&#xfe0f;</span>
+      <span class="nav-lbl">Settings</span>
+    </button>
+    <button class="nav-btn" data-page="games" onclick="showPage('games')">
+      <span class="nav-icon">&#x1f3ae;</span>
+      <span class="nav-lbl">Games</span>
+    </button>
+  </nav>
 
-<div class="card">
-  <div class="card-title">Info</div>
-  <div class="row" style="margin-bottom:8px">
-    <span class="badge">v2024.07.27</span>
-    <span class="badge" id="soc-badge">-</span>
-    <span class="badge">rolling</span>
-  </div>
-  <div class="info-line"><span class="info-label">Module</span><span class="info-value">CAsabEnd</span></div>
-  <div class="info-line"><span class="info-label">Author</span><span class="info-value">CAsabEndTeam</span></div>
-  <div class="info-line"><span class="info-label">Release</span><span class="info-value">Rolling</span></div>
-</div>
-
-<div class="card">
-  <div class="card-title">Update</div>
-  <div class="alert">
-    <span id="update-status">Memeriksa update...</span><br>
-    <span style="font-size:12px">CAsabEnd bakal ngecek update otomatis tiap boot lewat update.json</span>
-  </div>
 </div>
 
 <script>
 const BASE = '/data/adb/.config/CAsabEnd';
 const MODPATH = '/data/adb/modules/CAsabEnd';
+const CONFIG_FILE = BASE + '/config.json';
 
+// ========== HELPERS ==========
 async function readFile(path) {
   try {
+    const { errno, stdout } = await ksu.exec(`cat "${path}" 2>/dev/null`);
+    if (errno === 0) return stdout.trim();
     const r = await fetch('file://' + path);
     return (await r.text()).trim();
-  } catch { return '-'; }
+  } catch { return ''; }
 }
+
+async function writeFile(path, content) {
+  const escaped = content.replace(/'/g, "'\\''");
+  await ksu.exec(`echo '${escaped}' > "${path}"`);
+}
+
+async function fileExists(path) {
+  const { errno } = await ksu.exec(`[ -f "${path}" ]`);
+  return errno === 0;
+}
+
+async function readConfig() {
+  try {
+    const raw = await readFile(CONFIG_FILE);
+    return raw ? JSON.parse(raw) : getDefaultConfig();
+  } catch { return getDefaultConfig(); }
+}
+
+function getDefaultConfig() {
+  return {
+    preferences: { enforce_lite_mode: false, disable_tweaks: false, use_device_mitigation: false, log_level: 2 },
+    cpu_governor: { balance: 'schedutil', powersave: 'schedutil' }
+  };
+}
+
+async function saveConfig() {
+  await writeFile(CONFIG_FILE, JSON.stringify(config, null, 2));
+}
+
+let config = {};
+
+// ========== PAGE NAV ==========
+const pages = ['home', 'settings', 'games', 'sub'];
+let currentPage = 'home';
+let subStack = [];
+
+function showPage(name) {
+  if (name === 'sub') return;
+  pages.forEach(p => document.getElementById('page-' + p).classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('backBtn').style.display = 'none';
+  document.getElementById('nav').style.display = 'flex';
+  currentPage = name;
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.page === name));
+  document.getElementById('pageTitle').textContent = name === 'home' ? 'CAsabEnd' : name.charAt(0).toUpperCase() + name.slice(1);
+  if (name === 'home') refreshStatus();
+  if (name === 'games') loadGames();
+}
+
+function navigateTo(page) {
+  subStack.push(currentPage);
+  pages.forEach(p => document.getElementById('page-' + p).classList.remove('active'));
+  document.getElementById('page-sub').classList.add('active');
+  document.getElementById('backBtn').style.display = 'block';
+  document.getElementById('nav').style.display = 'none';
+  document.getElementById('pageTitle').textContent = page.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  renderSubPage(page);
+}
+
+function goBack() {
+  const prev = subStack.pop() || 'home';
+  showPage(prev);
+}
+
+// ========== SUBPAGES ==========
+function renderSubPage(page) {
+  const el = document.getElementById('subContent');
+  switch (page) {
+    case 'lite_mode': renderLiteMode(el); break;
+    case 'cpu_governor': renderCpuGovernor(el); break;
+    case 'log_level': renderLogLevel(el); break;
+    case 'disable_tweaks': renderDisableTweaks(el); break;
+    case 'device_mitigation': renderDeviceMitigation(el); break;
+    default: el.innerHTML = '<div class="alert">Page not found</div>';
+  }
+}
+
+function renderLiteMode(el) {
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-title">Lite Mode</div>
+      <div class="info-line"><span class="info-label">Status</span><span class="info-value" id="liteStatus">${config.preferences?.enforce_lite_mode ? 'ON' : 'OFF'}</span></div>
+      <div class="alert">Saat diaktifkan, profile Performance bakal pake CPU governor balance biar gak terlalu panas.</div>
+    </div>
+    <button class="btn btn-primary" onclick="toggleLiteMode()">${config.preferences?.enforce_lite_mode ? 'Matikan' : 'Aktifkan'}</button>
+  `;
+}
+
+function renderCpuGovernor(el) {
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-title">CPU Governor</div>
+      <div class="info-line"><span class="info-label">Balance</span><span class="info-value" id="govBal">${config.cpu_governor?.balance || 'schedutil'}</span></div>
+      <div class="info-line"><span class="info-label">Powersave</span><span class="info-value" id="govPs">${config.cpu_governor?.powersave || 'schedutil'}</span></div>
+      <div style="margin-top:12px">
+        <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:4px">Balance Governor</label>
+        <select class="select" id="selBalGov" onchange="setBalanceGov(this.value)">
+          <option value="schedutil">schedutil</option>
+          <option value="interactive">interactive</option>
+          <option value="conservative">conservative</option>
+          <option value="ondemand">ondemand</option>
+          <option value="performance">performance</option>
+          <option value="powersave">powersave</option>
+        </select>
+        <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:4px;margin-top:8px">Powersave Governor</label>
+        <select class="select" id="selPsGov" onchange="setPowersaveGov(this.value)">
+          <option value="schedutil">schedutil</option>
+          <option value="powersave">powersave</option>
+          <option value="conservative">conservative</option>
+          <option value="ondemand">ondemand</option>
+          <option value="interactive">interactive</option>
+          <option value="performance">performance</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="saveGovernor()">Simpan</button>
+  `;
+  document.getElementById('selBalGov').value = config.cpu_governor?.balance || 'schedutil';
+  document.getElementById('selPsGov').value = config.cpu_governor?.powersave || 'schedutil';
+}
+
+function renderLogLevel(el) {
+  const levels = ['NONE', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'VERBOSE'];
+  const current = config.preferences?.log_level ?? 2;
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-title">Log Level</div>
+      <div class="slider-group">
+        <label>Level: <strong id="logLevelLabel">${levels[current]} (${current})</strong></label>
+        <input type="range" class="slider" min="0" max="5" value="${current}" id="logSlider" oninput="updateLogLabel(this.value)">
+      </div>
+      <div class="alert">Makin tinggi level, makin detail log nya. Default: INFO (2).</div>
+    </div>
+    <button class="btn btn-primary" onclick="saveLogLevel()">Simpan</button>
+  `;
+}
+
+function renderDisableTweaks(el) {
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-title">Disable All Tweaks</div>
+      <div class="info-line"><span class="info-label">Status</span><span class="info-value" id="disableStatus">${config.preferences?.disable_tweaks ? 'ON' : 'OFF'}</span></div>
+      <div class="alert">Aktifin ini buat matiin semua tuning CAsabEnd. Module tetep jalan tapi gak ngubah apa-apa.</div>
+    </div>
+    <button class="btn btn-primary" onclick="toggleDisableTweaks()">${config.preferences?.disable_tweaks ? 'Matikan' : 'Aktifkan'}</button>
+  `;
+}
+
+function renderDeviceMitigation(el) {
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-title">Device Mitigation</div>
+      <div class="info-line"><span class="info-label">Status</span><span class="info-value" id="mitigationStatus">${config.preferences?.use_device_mitigation ? 'ON' : 'OFF'}</span></div>
+      <div class="alert">Aktifin ini buat skip tweak tertentu yang bermasalah di device kamu (kalo ada aturannya).</div>
+    </div>
+    <button class="btn btn-primary" onclick="toggleMitigation()">${config.preferences?.use_device_mitigation ? 'Matikan' : 'Aktifkan'}</button>
+  `;
+}
+
+// ========== TOGGLES ==========
+async function toggleLiteMode() {
+  config.preferences.enforce_lite_mode = !config.preferences.enforce_lite_mode;
+  await saveConfig();
+  updateToggleUI();
+  refreshSubPage();
+}
+
+async function toggleDisableTweaks() {
+  config.preferences.disable_tweaks = !config.preferences.disable_tweaks;
+  await saveConfig();
+  updateToggleUI();
+  refreshSubPage();
+}
+
+async function toggleMitigation() {
+  config.preferences.use_device_mitigation = !config.preferences.use_device_mitigation;
+  await saveConfig();
+  updateToggleUI();
+  refreshSubPage();
+}
+
+function updateToggleUI() {
+  document.getElementById('toggleLite').classList.toggle('on', !!config.preferences?.enforce_lite_mode);
+  document.getElementById('toggleDisable').classList.toggle('on', !!config.preferences?.disable_tweaks);
+  document.getElementById('toggleMitigation').classList.toggle('on', !!config.preferences?.use_device_mitigation);
+}
+
+function refreshSubPage() {
+  const el = document.getElementById('subContent');
+  const title = document.getElementById('pageTitle').textContent.toLowerCase().replace(/ /g, '_');
+  renderSubPage(title.replace(/[^a-z_]/g, ''));
+}
+
+function updateLogLabel(val) {
+  const levels = ['NONE', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'VERBOSE'];
+  document.getElementById('logLevelLabel').textContent = levels[val] + ' (' + val + ')';
+}
+
+async function saveLogLevel() {
+  config.preferences.log_level = parseInt(document.getElementById('logSlider').value);
+  await saveConfig();
+  ksu.toast('Log level saved!');
+}
+
+async function setBalanceGov(val) { window._balGov = val; }
+async function setPowersaveGov(val) { window._psGov = val; }
+
+async function saveGovernor() {
+  const bal = document.getElementById('selBalGov').value;
+  const ps = document.getElementById('selPsGov').value;
+  config.cpu_governor.balance = bal;
+  config.cpu_governor.powersave = ps;
+  await saveConfig();
+  ksu.toast('Governor saved!');
+}
+
+// ========== PROFILE ==========
+async function switchProfile(profile) {
+  try {
+    await ksu.exec(`echo "${profile}" > ${BASE}/status/profile`);
+    await ksu.exec(`. ${MODPATH}/scripts/casabend_profiler.sh && ${profile}_profile`);
+    document.querySelectorAll('.btn-perf,.btn-bal,.btn-ps').forEach(b => b.classList.remove('active'));
+    if (profile === 'performance') document.getElementById('btnPerf').classList.add('active');
+    else if (profile === 'balance') document.getElementById('btnBal').classList.add('active');
+    else if (profile === 'powersave') document.getElementById('btnPs').classList.add('active');
+    ksu.toast('Profile: ' + profile);
+  } catch (e) {
+    ksu.toast('Failed: ' + e.message);
+  }
+}
+
+// ========== STATUS ==========
+let statusInterval = null;
 
 async function refreshStatus() {
-  const p = await readFile(BASE + '/status/profile');
-  const s = await readFile(BASE + '/soc_recognition');
-  const g = await readFile(BASE + '/status/governor');
-  let f = '-';
   try {
-    const cpu0 = await readFile('/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq');
-    if (cpu0 !== '-' && !isNaN(parseInt(cpu0))) {
-      f = Math.round(parseInt(cpu0) / 1000) + ' MHz';
-    }
-  } catch {}
+    const p = await readFile(BASE + '/status/profile') || 'balance';
+    const s = await readFile(BASE + '/soc_recognition') || 'generic';
+    const g = await readFile(BASE + '/status/governor') || 'schedutil';
+    const socRec = await readFile(BASE + '/soc_recognition') || 'generic';
+    const ver = await readFile(MODPATH + '/version') || 'v2026.07.27';
+    let freq = '-';
+    try {
+      const f = await readFile('/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq');
+      if (f && !isNaN(parseInt(f))) freq = Math.round(parseInt(f) / 1000) + ' MHz';
+    } catch {}
+    let sdk = '-';
+    try {
+      const { stdout } = await ksu.exec('getprop ro.build.version.sdk');
+      sdk = stdout.trim() || '-';
+    } catch {}
+    let kernel = '-';
+    try {
+      const { stdout } = await ksu.exec('uname -r');
+      kernel = stdout.trim() || '-';
+    } catch {}
+    let daemonPid = '-';
+    try {
+      const { stdout } = await ksu.exec('pidof casabend 2>/dev/null || echo ""');
+      daemonPid = stdout.trim() || 'running (no pid)';
+    } catch {}
 
-  document.getElementById('profile').textContent = p.charAt(0).toUpperCase() + p.slice(1);
-  document.getElementById('soc').textContent = s.charAt(0).toUpperCase() + s.slice(1);
-  document.getElementById('governor').textContent = g;
-  document.getElementById('freq').textContent = f;
-  document.getElementById('soc-badge').textContent = s;
+    document.getElementById('statProfile').textContent = p.charAt(0).toUpperCase() + p.slice(1);
+    document.getElementById('statSoC').textContent = socRec.charAt(0).toUpperCase() + socRec.slice(1);
+    document.getElementById('statGov').textContent = g;
+    document.getElementById('statFreq').textContent = freq;
+    document.getElementById('statDaemon').textContent = daemonPid;
+    document.getElementById('statVer').textContent = ver;
+    document.getElementById('statKernel').textContent = kernel;
+    document.getElementById('badgeVer').textContent = ver;
+    document.getElementById('badgeSoC').textContent = socRec;
+    document.getElementById('infoAndroid').textContent = 'API ' + sdk;
+    document.getElementById('infoPid').textContent = daemonPid;
 
-  document.querySelectorAll('.btn-performance,.btn-balance,.btn-powersave').forEach(b => b.classList.remove('active'));
-  if (p === 'performance') document.getElementById('btn-perf').classList.add('active');
-  else if (p === 'balance') document.getElementById('btn-bal').classList.add('active');
-  else if (p === 'powersave') document.getElementById('btn-ps').classList.add('active');
+    document.querySelectorAll('.btn-perf,.btn-bal,.btn-ps').forEach(b => b.classList.remove('active'));
+    if (p === 'performance') document.getElementById('btnPerf').classList.add('active');
+    else if (p === 'powersave') document.getElementById('btnPs').classList.add('active');
+    else document.getElementById('btnBal').classList.add('active');
+  } catch (e) { console.error('Status refresh error:', e); }
 }
 
-async function setProfile(profile) {
-  try {
-    const p = await readFile(MODPATH + '/scripts/casabend_profiler.sh');
-    if (p === '-') throw new Error('profiler not found');
-    await fetch('file://' + BASE + '/action/' + profile);
-  } catch {}
-  setTimeout(refreshStatus, 1000);
-}
-
+// ========== UPDATE CHECK ==========
 async function checkUpdate() {
   try {
     const r = await fetch('https://raw.githubusercontent.com/iann4k30-spec/CAsabEnd-Module/main/update.json');
     const data = await r.json();
-    const currentVer = 20240727;
+    const currentVer = 20260727;
     if (data.versionCode > currentVer) {
-      document.getElementById('update-status').innerHTML = '🚀 <b>Update tersedia: ' + data.version + '</b><br><a href="' + data.zipUrl + '" style="color:var(--blue)">Download</a>';
+      document.getElementById('updateStatus').innerHTML = '&#x1f680; <b>Update: ' + data.version + '</b><br><a href="' + data.zipUrl + '" style="color:var(--blue)">Download</a>';
     } else {
-      document.getElementById('update-status').textContent = '✅ Module sudah yang terbaru';
+      document.getElementById('updateStatus').textContent = '&#x2705; CAsabEnd sudah yang terbaru (2026)';
     }
   } catch {
-    document.getElementById('update-status').textContent = '⚠️ Gagal cek update (butuh internet)';
+    document.getElementById('updateStatus').textContent = '&#x26a0;&#xfe0f; Gagal cek update (butuh internet)';
   }
 }
 
-refreshStatus();
-setInterval(refreshStatus, 3000);
-checkUpdate();
+// ========== GAMES ==========
+let allApps = [];
+
+async function loadGames() {
+  const el = document.getElementById('gameList');
+  try {
+    const { stdout } = await ksu.exec('pm list packages -3 2>/dev/null');
+    const pkgs = stdout.split('\n').filter(l => l.startsWith('package:')).map(l => l.substring(8).trim()).filter(Boolean);
+    const baseList = await readFile(MODPATH + '/gamelist.txt') || '';
+    const baseGames = baseList.split('\n').filter(Boolean);
+    allApps = [...new Set([...baseGames, ...pkgs])].filter(Boolean);
+    renderGames(allApps);
+  } catch (e) {
+    el.innerHTML = '<div class="alert">Error loading apps: ' + e.message + '</div>';
+  }
+}
+
+function filterGames() {
+  const q = document.getElementById('gameSearch').value.toLowerCase();
+  const filtered = allApps.filter(a => a.toLowerCase().includes(q));
+  renderGames(filtered);
+}
+
+function renderGames(list) {
+  const el = document.getElementById('gameList');
+  if (!list.length) { el.innerHTML = '<div class="alert">No apps found</div>'; return; }
+  el.innerHTML = list.map(pkg => `
+    <div class="app-item">
+      <div class="app-icon"></div>
+      <div class="app-name">${pkg.split('.').pop()}</div>
+      <div><div class="app-pkg">${pkg}</div></div>
+    </div>
+  `).join('');
+}
+
+// ========== INIT ==========
+async function init() {
+  config = await readConfig();
+  updateToggleUI();
+  refreshStatus();
+  checkUpdate();
+  statusInterval = setInterval(refreshStatus, 3000);
+}
+
+init();
 </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-v2024.07.27-bc8cff?style=for-the-badge&logo=github"/>
+  <img src="https://img.shields.io/badge/Version-v2026.07.27-bc8cff?style=for-the-badge&logo=github"/>
   <img src="https://img.shields.io/badge/Magisk-✓-00b894?style=for-the-badge&logo=magisk"/>
   <img src="https://img.shields.io/badge/KernelSU-✓-6c5ce7?style=for-the-badge&logo=linux"/>
   <img src="https://img.shields.io/badge/APatch-✓-e17055?style=for-the-badge&logo=android"/>
@@ -54,7 +54,7 @@ Dia bakal ngeboost HP kamu pas main game, tapi tetep adem pas dipake sehari-hari
 
 ### Cara Install
 ```
-1. Download CAsabEnd-v2024.07.27.zip
+1. Download CAsabEnd-v2026.07.27.zip
 2. Buka Magisk / KernelSU / APatch
 3. Modules → Install from storage
 4. Pilih zip nya
@@ -85,7 +85,7 @@ Artinya: tiap ada update tinggal flash zip baru, **gausah uninstall dulu**.
 Update bakal ke-detek otomatis di WebUI module.
 
 ```
-CAsabEnd v2024.07.27  ────────────▶  v2024.08.15
+CAsabEnd v2026.07.27  ────────────▶  v2026.08.15
         └─ flash aja                    └─ flash aja
 ```
 
@@ -124,7 +124,7 @@ CAsabEnd/
 │                               │
 │  #CAsabEnd #rolling           │
 │  Module: CAsabEnd             │
-│  Version: v2024.07.27         │
+│  Version: v2026.07.27         │
 └──────────────────────────────┘
 ```
 
